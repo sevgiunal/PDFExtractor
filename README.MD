@@ -1,10 +1,10 @@
-# 📝 SAT-style PDF MCQ Extractor
+# SAT-style PDF MCQ Extractor
 
 This Python script extracts multiple-choice questions (MCQs) from SAT-style practice test PDFs and saves them in a structured JSON format. It's designed to handle the typical layout and formatting of official digital SAT practice PDFs.
 
 ---
 
-## 🧠 Overview
+## Overview
 
 Standardized test PDFs (like those from the SAT) often contain non-question content such as instructions, headers, and filler pages. This script performs the following:
 
@@ -15,7 +15,7 @@ Standardized test PDFs (like those from the SAT) often contain non-question cont
 
 ---
 
-## ⚙️ Usage
+## Usage
 
 ### Run the script from terminal:
 
@@ -26,14 +26,14 @@ python extract_questions.py <input_pdf> <output_json>
 **Example:**
 
 ```bash
-python extract_questions.py sat-practice-test-4-digital.pdf extracted_questions.json
+python extract_questions.py sat-practice-test-4-digital.pdf extracted_questions_test_4.json
 ```
 
-This command will extract all identifiable multiple-choice questions from the given PDF and save them to `extracted_questions.json`.
+This command will extract all identifiable multiple-choice questions from the given PDF and save them to `extracted_questions_test_4.json`.
 
 ---
 
-### 📂 Input Assumptions
+### Input Assumptions
 
 This script is built with SAT Digital Practice PDFs in mind and assumes:
 
@@ -45,7 +45,7 @@ This script is built with SAT Digital Practice PDFs in mind and assumes:
 
 ---
 
-## 🏗️ High-Level Design
+## High-Level Design
 
 ### 1. Argument Parsing
 
@@ -98,17 +98,29 @@ The script loops through cleaned lines and:
 - Builds structured dictionaries like:
 
 ```json
-{
-  "question_id": "23",
-  "question_type": "single_choice",
-  "question_text": "Which of the following is true based on the passage?",
-  "options": [
-    {"key": "A", "text": "The author supports the claim..."},
-    {"key": "B", "text": "The passage describes..."},
-    {"key": "C", "text": "It is implied that..."},
-    {"key": "D", "text": "The main idea is..."}
-  ]
-}
+  {
+    "question_id": "1",
+    "question_type": "single_choice",
+    "question_text": "The spacecraft OSIRIS-REx briefly made contact with the asteroid 101955 Bennu in 2020. NASA scientist Daniella DellaGiustina reports that despite facing the unexpected obstacle of a surface mostly covered in boulders, OSIRIS-REx successfully _______ a sample of the surface, gathering pieces of it to bring back to Earth. Which choice completes the text with the most logical and precise word or phrase?",
+    "options": [
+      {
+        "key": "A",
+        "text": "attached"
+      },
+      {
+        "key": "B",
+        "text": "collected"
+      },
+      {
+        "key": "C",
+        "text": "followed"
+      },
+      {
+        "key": "D",
+        "text": "replaced"
+      }
+    ]
+  }
 ```
 
 ---
@@ -123,36 +135,20 @@ json.dump(questions, f, indent=2, ensure_ascii=False)
 
 ---
 
-## 📦 File Structure
+## File Structure
 
 ```bash
 .
 ├── extract_questions.py              # Main script
 ├── sat-practice-test-4-digital.pdf  # Input PDF (example)
-├── extracted_questions.json         # Output (example)
+├── extracted_questions_test_4.json         # Output (example
+├── sat-practice-test-5-digital.pdf  # Input PDF (example)
+├── extracted_questions_test_5.json         # Output (example)
+├── sat-practice-test-6-digital.pdf  # Input PDF (example)
+├── extracted_questions_test_6.json         # Output (example)
 └── README.md                        # This file
 ```
 
----
-
-## ✅ Output Example
-
-```json
-[
-  {
-    "question_id": "1",
-    "question_type": "single_choice",
-    "question_text": "What is the value of x in the equation above?",
-    "options": [
-      {"key": "A", "text": "2"},
-      {"key": "B", "text": "4"},
-      {"key": "C", "text": "6"},
-      {"key": "D", "text": "8"}
-    ]
-  },
-  ...
-]
-```
 
 ---
 
@@ -164,12 +160,12 @@ json.dump(questions, f, indent=2, ensure_ascii=False)
 Install with:
 
 ```bash
-pip install pypdf
+pip install -r requirements.txt
 ```
 
 ---
 
-## 🧱 Regex Filters
+## Regex Filters
 
 ### Page Skip Patterns
 
@@ -201,7 +197,7 @@ SKIP_PATTERNS = [
 
 ---
 
-## 📌 Assumptions
+## Assumptions
 
 - Only multiple-choice questions are extracted
 - Non-MCQs like grid-ins or short answers are ignored
@@ -210,9 +206,9 @@ SKIP_PATTERNS = [
 
 ---
 
-## 🛠️ Future Improvements
+## Future Improvements
 
 - Add OCR support for scanned/image-based PDFs
-- Extract short-answer or numeric-entry questions
+- Add LATEX for equations
+- Extract graphs/tables etc.
 - Auto-detect answer keys (if embedded)
-- CLI flags for debug/verbose mode or filtering by module
